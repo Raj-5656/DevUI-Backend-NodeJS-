@@ -1,5 +1,6 @@
 const userSchema = require("../Model/UserModel");
 const bcrypt = require("bcrypt");
+const jwt=require("jsonwebtoken")
 
 const securePassowrd = async (pass) => {
     return await bcrypt.hash(pass, 10);
@@ -28,3 +29,23 @@ exports.Registration = async (req, res) => {
         res.status(404).json(error);
     }
 };
+exports.Login = async (req, res) => {
+    try {
+        const {email,password}=req.body
+        const user=await userSchema.findOne({email:email})
+        
+        if(user){
+            const matchPassword=await bcrypt.compare(password,user.password)
+            if(matchPassword){
+                const token=jwt.sign({id:user._id},process.env.SECRETKEY,{expiresIn:'24h'})
+                res.status(200).json({success:true,message:"User logged in successfully",token:token,data:user})
+            }else{
+                res.status(409).json({success:false,message:"Email or password is incorrect"})
+            }
+        }else{
+            res.status(404).json({success:false,message:"User not found"})
+        }
+    } catch (error) {
+        res.status(404).json(error);
+    }
+}
