@@ -1,11 +1,14 @@
-const mongoose=require("mongoose")
+const mongoose = require("mongoose")
 
-const categorySchema=mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const categorySchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        lowercase: true,
+        trim: true,
     },
-},{timestamps:true})
+}, { timestamps: true })
 
-module.exports=mongoose.model("category",categorySchema)
+categorySchema.index({ name: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } })
+module.exports = mongoose.model("category", categorySchema)
 

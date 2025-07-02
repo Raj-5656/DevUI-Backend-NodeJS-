@@ -1,10 +1,17 @@
-const mongoose=require("mongoose")
+const mongoose = require("mongoose");
 
-const languageSchema=mongoose.Schema({
-    name:{
-        type:String,
-        required:true
-    }
-},{timestamp:true})
+const languageSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+    },
+}, {
+    timestamps: true,
+});
 
-module.exports=mongoose.model('language',languageSchema)
+languageSchema.index({ name: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } });
+
+module.exports = mongoose.model("Language", languageSchema);

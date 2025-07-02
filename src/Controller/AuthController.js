@@ -23,7 +23,7 @@ exports.Registration = async (req, res) => {
                 password: await securePassowrd(password),
             };
             const user = await userSchema.create(userDetails);
-            res.status(400).json({ message: "User Registered Successfully", user: user });
+            res.status(200).json({ message: "User Registered Successfully", user: user });
         }
     } catch (error) {
         res.status(404).json(error);
