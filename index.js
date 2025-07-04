@@ -5,7 +5,9 @@ const cors = require("cors");
 const routes=require("./src/Routes/Routes")
 const bodyParser = require("body-parser");
 require("./src/Config/Connection");
-app.use(cors());
+app.use(cors({
+    origin:'*'
+}));
 app.use(express.json());
 app.use(bodyParser.json());
 console.log(process.env.PORT );

@@ -5,10 +5,10 @@ exports.createLanguage = async (req, res) => {
     try {
         const { name } = req.body
         await languageSchema.create({ name: name })
-        res.status(200).json({ success: true, mesage: "Language created successfully" })
+        res.status(200).json({ success: true, message: "Language created successfully" })
     } catch (error) {
         if (error.code === 11000) {
-            res.status(400).json({ error: "Language already exists." });
+            res.status(400).json({ message: "Language already exists." });
         } else {
             res.status(400).json(error)
         }
