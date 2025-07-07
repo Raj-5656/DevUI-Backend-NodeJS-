@@ -11,17 +11,21 @@ const codeSchema = mongoose.Schema({
   },
 });
 
-const componentSchema = mongoose.Schema({
+const componentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
   },
   description: {
     type: String,
     required: true
   },
-  code:[codeSchema]
-},{timestamp:true});
+  code: [codeSchema]
+}, { timestamp: true });
 
-module.exports=mongoose.model('component',componentSchema)
+componentSchema.index({ name: 1 }, { unique: true, collation: { locale: 'en', strength: 2 } })
+module.exports = mongoose.model('component', componentSchema)
 

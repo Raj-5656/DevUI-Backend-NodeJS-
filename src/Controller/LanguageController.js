@@ -33,3 +33,18 @@ exports.deleteLanguage = async (req,res) => {
         res.status(404).json(error)
     }
 }
+
+exports.updateLanguage = async (req, res) => {
+    try {
+        const {id}=req.params
+        const {name}=req.body
+        const language=await languageSchema.findByIdAndUpdate(id,{name:name})        
+        if(language){
+            res.status(200).json({success:true,message:"Language updated successfully"})
+        }else{
+            res.status(409).json({success:false,message:"Language not found"})
+        }
+    } catch (error) {
+        res.status(404).json(error)
+    }
+}

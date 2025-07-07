@@ -6,7 +6,6 @@ const key = process.env.SECRETKEY
 
 exports.auth = async (req, res, next) => {
     const istoken = req?.body?.token || req?.query?.token || req?.headers["authorization"]
-    console.log(istoken);
     
     if (!istoken) {
         return res.status(409).json({ message: 'Unauthorized token not found' })

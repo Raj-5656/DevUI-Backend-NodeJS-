@@ -10,7 +10,6 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(bodyParser.json());
-console.log(process.env.PORT );
 const PORT = process.env.PORT ;
 
 app.use('/app',routes)
